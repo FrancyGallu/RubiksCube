@@ -1,0 +1,93 @@
+OpenShadingLanguage 1.00
+# Compiled by oslc 1.6.2dev
+shader groundShader
+param	float	Frequency	1		%read{2,2} %write{2147483647,-1}
+oparam	color	Cout	1 1 1		%read{2147483647,-1} %write{25,25}
+global	point	P	%read{1,1} %write{2147483647,-1}
+local	point	Np	%read{2,2} %write{1,1}
+local	float	temp	%read{4,20} %write{3,3}
+local	color	ctemp	%read{25,25} %write{7,24}
+const	string	$const1	"shader"		%read{1,1} %write{2147483647,-1}
+const	string	$const2	"transform"		%read{0,0} %write{2147483647,-1}
+const	string	$const3	"common"		%read{1,1} %write{2147483647,-1}
+temp	point	$tmp1	%read{3,3} %write{2,2}
+const	int	$const4	0		%read{4,4} %write{2147483647,-1}
+temp	int	$tmp2	%read{5,5} %write{4,4}
+const	float	$const5	0.2		%read{5,8} %write{2147483647,-1}
+temp	int	$tmp3	%read{6,6} %write{5,5}
+const	color	$const6	0.050000001 0.30000001 0.40000001		%read{7,7} %write{2147483647,-1}
+temp	int	$tmp4	%read{9,9} %write{8,8}
+const	float	$const7	0.40000001		%read{9,12} %write{2147483647,-1}
+temp	int	$tmp5	%read{10,10} %write{9,9}
+const	color	$const8	0.22 0.28999999 0.31999999		%read{11,11} %write{2147483647,-1}
+temp	int	$tmp6	%read{13,13} %write{12,12}
+const	float	$const9	0.60000002		%read{13,16} %write{2147483647,-1}
+temp	int	$tmp7	%read{14,14} %write{13,13}
+const	color	$const10	0.15000001 0.25 0.30000001		%read{15,15} %write{2147483647,-1}
+temp	int	$tmp8	%read{17,17} %write{16,16}
+const	float	$const11	0.80000001		%read{17,20} %write{2147483647,-1}
+temp	int	$tmp9	%read{18,18} %write{17,17}
+const	color	$const12	0.30000001 0.37 0.37		%read{19,19} %write{2147483647,-1}
+temp	int	$tmp10	%read{21,21} %write{20,20}
+const	int	$const13	1		%read{21,21} %write{2147483647,-1}
+temp	int	$tmp11	%read{22,22} %write{21,21}
+const	color	$const14	0.19 0.27000001 0.34		%read{23,23} %write{2147483647,-1}
+const	color	$const15	1 1 1		%read{24,24} %write{2147483647,-1}
+code ___main___
+# groundShader.osl:8
+#   point Np = transform("shader",P);
+	functioncall	$const2 2 	%filename{"groundShader.osl"} %line{8} %argrw{"r"}
+# /Applications/Pixar/RenderManProServer-20.1/lib/osl/include/stdosl.h:243
+# normal transform (matrix Mto, normal p) BUILTIN;
+	transform	Np $const3 $const1 P 	%filename{"/Applications/Pixar/RenderManProServer-20.1/lib/osl/include/stdosl.h"} %line{243} %argrw{"wrrr"}
+# groundShader.osl:10
+#   float temp = (float) noise(Np*Frequency);
+	mul		$tmp1 Np Frequency 	%filename{"groundShader.osl"} %line{10} %argrw{"wrr"}
+	noise		temp $tmp1 	%argrw{"wr"}
+# groundShader.osl:17
+#   if(0 <= temp < 0.2)
+	le		$tmp2 $const4 temp 	%line{17} %argrw{"wrr"}
+	lt		$tmp3 $tmp2 $const5 	%argrw{"wrr"}
+	if		$tmp3 8 25 	%argrw{"r"}
+# groundShader.osl:19
+#     ctemp = color (0.05, 0.30, 0.40);
+	assign		ctemp $const6 	%line{19} %argrw{"wr"}
+# groundShader.osl:20
+#   } else if(0.2 <= temp < 0.4)
+	le		$tmp4 $const5 temp 	%line{20} %argrw{"wrr"}
+	lt		$tmp5 $tmp4 $const7 	%argrw{"wrr"}
+	if		$tmp5 12 25 	%argrw{"r"}
+# groundShader.osl:22
+#     ctemp = color (0.22, 0.29, 0.32);
+	assign		ctemp $const8 	%line{22} %argrw{"wr"}
+# groundShader.osl:23
+#   } else if(0.4 <= temp < 0.6)
+	le		$tmp6 $const7 temp 	%line{23} %argrw{"wrr"}
+	lt		$tmp7 $tmp6 $const9 	%argrw{"wrr"}
+	if		$tmp7 16 25 	%argrw{"r"}
+# groundShader.osl:25
+#     ctemp = color (0.15, 0.25, 0.30);
+	assign		ctemp $const10 	%line{25} %argrw{"wr"}
+# groundShader.osl:26
+#   } else if(0.6 <= temp < 0.8)
+	le		$tmp8 $const9 temp 	%line{26} %argrw{"wrr"}
+	lt		$tmp9 $tmp8 $const11 	%argrw{"wrr"}
+	if		$tmp9 20 25 	%argrw{"r"}
+# groundShader.osl:28
+#     ctemp = color (0.30, 0.37, 0.37);
+	assign		ctemp $const12 	%line{28} %argrw{"wr"}
+# groundShader.osl:29
+#   } else if(0.8 <= temp <= 1)
+	le		$tmp10 $const11 temp 	%line{29} %argrw{"wrr"}
+	le		$tmp11 $tmp10 $const13 	%argrw{"wrr"}
+	if		$tmp11 24 25 	%argrw{"r"}
+# groundShader.osl:31
+#     ctemp = color (0.19, 0.27, 0.34);
+	assign		ctemp $const14 	%line{31} %argrw{"wr"}
+# groundShader.osl:34
+#     ctemp = color (1, 1, 1);
+	assign		ctemp $const15 	%line{34} %argrw{"wr"}
+# groundShader.osl:37
+#   Cout = ctemp;
+	assign		Cout ctemp 	%line{37} %argrw{"wr"}
+	end
